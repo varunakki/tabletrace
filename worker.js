@@ -1,0 +1,2 @@
+import {analyze,parseCSV} from './engine.js';
+self.onmessage=({data})=>{try{self.postMessage({id:data.id,status:'working',message:'Profiling columns and checking data quality…'});const dataset=data.dataset||parseCSV(data.text,data.delimiter);self.postMessage({id:data.id,status:'working',message:'Fitting the isolation forest and reviewing ML readiness…'});const result=analyze(dataset,data.options);self.postMessage({id:data.id,status:'done',dataset,result});}catch(error){self.postMessage({id:data.id,status:'error',message:error.message||'Analysis failed.'});}};
